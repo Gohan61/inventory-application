@@ -1,0 +1,15 @@
+extends layout
+
+block content
+    h1= title
+    
+    if itemList.length
+        ul
+            each itemName in itemList
+                li
+                    p #[strong Product: ] #{itemName.name}
+                    p #{itemName.description}
+                    p #[strong Price: ] € #{itemName.price}
+                    p #[strong Items in stock: ] #{itemName.numberInStock}
+    else
+        p There are no item
