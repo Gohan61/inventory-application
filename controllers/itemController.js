@@ -9,5 +9,6 @@ exports.index = asyncHandler(async (req, res, next) => {
   res.render("category", {
     itemList: items,
     title: category.name,
+    category: category,
   });
 });
