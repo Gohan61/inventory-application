@@ -1,0 +1,18 @@
+extends layout
+
+block content
+
+    h1= title
+
+    form(method='POST')
+        div.form-category
+            label(for='name') Category name:
+            input#name(type='text' placeholder='Full size, TKL, etc.' name='name' required value=(undefined===category ? '' : category.name)) 
+            label(for='description') Category description:
+            input#description(type='text' placeholder='Features of this type of keyboard' name='description' required value=(undefined===category ? '' : category.description)) 
+        button(type='submit') Submit
+
+        if errors
+            ul
+                for error in errors
+                    li!=error.msg
