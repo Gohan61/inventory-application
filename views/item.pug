@@ -1,0 +1,15 @@
+extend layout
+
+block content
+
+    h1= title
+    if item
+        p #{item.description}
+        p #[strong Price: ] € #{item.price}
+        p #[strong Items in stock: ] #{item.numberInStock}
+    else
+            p There is no item
+    hr
+    p
+        a(href='/category/'+categoryID) Back to #{category.name}
+    
