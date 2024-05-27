@@ -7,7 +7,8 @@ block content
         ul
             each itemName in itemList
                 li
-                    p #[strong Product: ] #{itemName.name}
+                    p #[strong Product: ] 
+                        a(href='/category/item/' + itemName._id) #{itemName.name}
                     p #{itemName.description}
                     p #[strong Price: ] € #{itemName.price}
                     p #[strong Items in stock: ] #{itemName.numberInStock}
