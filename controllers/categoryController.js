@@ -1,4 +1,5 @@
 const Category = require("../models/category");
+const Item = require("../models/item");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
@@ -54,3 +55,39 @@ exports.category_create_post = [
     }
   }),
 ];
+
+exports.category_delete_get = asyncHandler(async (req, res, next) => {
+  const [category, items] = await Promise.all([
+    Category.findById(req.params.id).exec(),
+    Item.find({ category: req.params.id }, "name").exec(),
+  ]);
+
+  if (category === null) {
+    res.redirect("/");
+  }
+
+  res.render("category_delete", {
+    title: "Delete",
+    category: category,
+    items: items,
+  });
+});
+
+exports.category_delete_post = asyncHandler(async (req, res, next) => {
+  const [category, items] = await Promise.all([
+    Category.findById(req.params.id).exec(),
+    Item.find({ category: req.params.id }, "name").exec(),
+  ]);
+
+  if (items.length > 1) {
+    res.render("category_delete", {
+      title: "Delete",
+      category: category,
+      items: items,
+    });
+    return;
+  } else {
+    await Category.findByIdAndDelete(req.body.categoryid);
+    res.redirect("/");
+  }
+});
