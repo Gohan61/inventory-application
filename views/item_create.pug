@@ -1,0 +1,25 @@
+extend layout
+
+block content
+
+    h1= title
+
+    form(method='POST')
+        div.form-create
+            label(for='name') Item name:
+            input#name(type='text' placeholder='Chronokey - banana' name='name' required value=(undefined===item ? '' : item.name))
+            label(for='description') Description:
+            input#description(type='text' name='description' placeholder='Detail of keyboard + switch' required value=(undefined===item ? '' : item.description))
+            label(for='category') Category:
+            select#category(name='category' required)
+                option(value='') --Please select a category--
+                for category in categories
+                    option(value=category._id) #{category.name}
+            label(for='price') Price:
+            input#price(type='number' step='0.01' name='price' placeholder=32.99 required value=(undefined===item ? '' : item.price))
+            label(for='numberInStock') Number in stock:
+            input#numberInStock(type='number' name='numberInStock' placeholder=5 required value=(undefined===item ? '' : item.numberInStock))
+        button(type='submit') Submit
+
+    p
+        a(href='/') Go back to home page
