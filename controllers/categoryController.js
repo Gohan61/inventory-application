@@ -4,7 +4,7 @@ const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
 exports.category_list = asyncHandler(async (req, res, next) => {
-  const categories = await Category.find({}, "name").sort({ name: 1 }).exec();
+  const categories = await Category.find({}).sort({ name: 1 }).exec();
 
   res.render("index", { title: "Keyboard store", category_list: categories });
 });
