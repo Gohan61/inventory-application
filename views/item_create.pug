@@ -14,8 +14,11 @@ block content
             select#category(name='category' required)
                 option(value='') --Please select a category--
                 for category in categories
-                    if item_category._id.toString()===category._id.toString()
-                        option(value=item_category._id selected) #{item_category.name}
+                    if item_category
+                        if item_category._id.toString()===category._id.toString()
+                            option(value=item_category._id selected) #{item_category.name}
+                        else
+                        option(value=category._id) #{category.name}
                     else
                         option(value=category._id) #{category.name}
             label(for='price') Price:
