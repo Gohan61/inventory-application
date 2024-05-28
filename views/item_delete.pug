@@ -1,0 +1,17 @@
+extends layout
+
+block content
+
+    h1 #{title}: #{item.name}
+
+    p Do you really want to delete this item?
+
+    form(method='POST')
+        div.form-delete
+            input(type='hidden' name='itemid' value=item._id)
+
+        button(type='submit') Delete
+
+    p
+        a(href='/category' + item.url) Go back
+
