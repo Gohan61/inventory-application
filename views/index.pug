@@ -1,12 +1,13 @@
 extends layout
 
 block content
-    h1= title
-    p Welcome to #{title}
+    div.header
+        h1= title
+        p Welcome to #{title}, your place to find the perfect keeb for your needs!
 
-    h1 Category list
+    h2 Category list
     if category_list.length
-        ul
+        ul.category-list
             each category in category_list
                 li
                     a(href=category.url) #{category.name}
@@ -14,8 +15,8 @@ block content
     else
             p There are no categories
     hr
-    p
+    p.create
         a(href='/create') Create a category
-    p
+    p.create
         a(href='/category/item/create') Create a new item
 
