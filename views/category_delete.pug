@@ -12,7 +12,7 @@ block content
             dl
                 each item in items
                     dt
-                        a(href=category.url) #{category.name}
+                        a(href=item.url) #{item.name}
     
     else
         p Do you really want to delete this category?
@@ -22,3 +22,6 @@ block content
                 input(type='hidden' name='categoryid' value=category._id)
             
             button(type='submit') Delete
+
+    p
+        a(href=category.url) Go back to #{category.name}
