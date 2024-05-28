@@ -73,24 +73,31 @@ exports.category_delete_get = asyncHandler(async (req, res, next) => {
   });
 });
 
-exports.category_delete_post = asyncHandler(async (req, res, next) => {
-  const [category, items] = await Promise.all([
-    Category.findById(req.params.id).exec(),
-    Item.find({ category: req.params.id }, "name").exec(),
-  ]);
+exports.category_delete_post = [
+  body("password").trim().escape(),
 
-  if (items.length > 1) {
-    res.render("category_delete", {
-      title: "Delete",
-      category: category,
-      items: items,
-    });
-    return;
-  } else {
-    await Category.findByIdAndDelete(req.body.categoryid);
-    res.redirect("/");
-  }
-});
+  asyncHandler(async (req, res, next) => {
+    const [category, items] = await Promise.all([
+      Category.findById(req.params.id).exec(),
+      Item.find({ category: req.params.id }, "name").exec(),
+    ]);
+
+    const passwordInput = req.body.password;
+
+    if (items.length > 1 || passwordInput !== process.env.PASSWORD) {
+      res.render("category_delete", {
+        title: "Delete",
+        category: category,
+        items: items,
+        error: "yes",
+      });
+      return;
+    } else {
+      await Category.findByIdAndDelete(req.body.categoryid);
+      res.redirect("/");
+    }
+  }),
+];
 
 exports.category_update_get = asyncHandler(async (req, res, next) => {
   const category = await Category.findById(req.params.id).exec();
@@ -109,9 +116,13 @@ exports.category_update_get = asyncHandler(async (req, res, next) => {
 
 exports.category_update_post = [
   body("name").trim().isLength({ min: 3 }).escape(),
+  body("description").trim().isLength({ min: 10 }).escape(),
+  body("password").trim().escape(),
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
+
+    const passwordInput = req.body.password;
 
     const category = new Category({
       name: req.body.name,
@@ -119,26 +130,20 @@ exports.category_update_post = [
       _id: req.params.id,
     });
 
-    if (!errors.isEmpty()) {
+    if (!errors.isEmpty() || passwordInput !== process.env.PASSWORD) {
       res.render("category_create", {
         title: "Update",
         category: category,
         errors: errors.array(),
+        error: "yes",
       });
       return;
     } else {
-      const categoryExists = await Category.findOne({ name: req.body.name })
-        .collation({ locale: "en", strength: 2 })
-        .exec();
-      if (categoryExists) {
-        res.redirect(categoryExists.url);
-      } else {
-        const updateCategory = await Category.findByIdAndUpdate(
-          req.params.id,
-          category
-        );
-        res.redirect(updateCategory.url);
-      }
+      const updateCategory = await Category.findByIdAndUpdate(
+        req.params.id,
+        category
+      );
+      res.redirect(updateCategory.url);
     }
   }),
 ];
