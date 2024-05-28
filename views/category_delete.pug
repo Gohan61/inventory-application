@@ -12,7 +12,7 @@ block content
             dl
                 each item in items
                     dt
-                        a(href=item.url) #{item.name}
+                        a(href='/category'+item.url) #{item.name}
     
     else
         p Do you really want to delete this category?
