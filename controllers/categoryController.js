@@ -91,3 +91,54 @@ exports.category_delete_post = asyncHandler(async (req, res, next) => {
     res.redirect("/");
   }
 });
+
+exports.category_update_get = asyncHandler(async (req, res, next) => {
+  const category = await Category.findById(req.params.id).exec();
+
+  if (category === null) {
+    const err = new Error("Category not found");
+    err.status = 404;
+    return next(err);
+  }
+
+  res.render("category_create", {
+    title: "Update",
+    category: category,
+  });
+});
+
+exports.category_update_post = [
+  body("name").trim().isLength({ min: 3 }).escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    const category = new Category({
+      name: req.body.name,
+      description: req.body.description,
+      _id: req.params.id,
+    });
+
+    if (!errors.isEmpty()) {
+      res.render("category_create", {
+        title: "Update",
+        category: category,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      const categoryExists = await Category.findOne({ name: req.body.name })
+        .collation({ locale: "en", strength: 2 })
+        .exec();
+      if (categoryExists) {
+        res.redirect(categoryExists.url);
+      } else {
+        const updateCategory = await Category.findByIdAndUpdate(
+          req.params.id,
+          category
+        );
+        res.redirect(updateCategory.url);
+      }
+    }
+  }),
+];
