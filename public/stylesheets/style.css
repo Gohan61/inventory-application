@@ -3,6 +3,29 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+.header h1 {
+  font-size: 3em;
+  font-weight: bold;
+}
+
+.header p {
+  font-size: 1.5em;
+  font-style: italic;
+}
+
+.category-list li {
+  font-size: 1.5em;
+  color: chocolate;
+}
+
+.category-list li a {
+  color: cornflowerblue;
+}
+
 a {
-  color: #00B7FF;
+  text-decoration: underline red;
+}
+
+.create {
+  font-size: 1.2em;
 }
