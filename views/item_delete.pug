@@ -11,7 +11,14 @@ block content
             input(type='hidden' name='itemid' value=item._id)
 
         button(type='submit') Delete
+    br
+    
+    div.passwordBox
+        label(for='password') Enter password:
+        input(type='text' id='password' name='password')
+
+    if error
+        p.warning Wrong password
 
     p.create
         a(href='/category' + item.url) Go back
-

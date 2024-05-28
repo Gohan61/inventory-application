@@ -20,8 +20,11 @@ block content
         form(method="POST")
             div.form-delete
                 input(type='hidden' name='categoryid' value=category._id)
-            
+                label(for='password') Enter password:
+                input(type='text' name='password' id='password')
             button(type='submit') Delete
+    if error
+        p.warning Wrong password
     hr
     p.create
         a(href=category.url) Go back to #{category.name}

@@ -9,9 +9,16 @@ block content
             label(for='name') Category name:
             input#name(type='text' placeholder='Full size, TKL, etc.' name='name' required value=(undefined===category ? '' : category.name)) 
             label(for='description') Category description:
-            input#description(type='text' placeholder='Features of this type of keyboard' name='description' required value=(undefined===category ? '' : category.description)) 
+            input#description(type='text' placeholder='Features of this type of keyboard' name='description' required value=(undefined===category ? '' : category.description))
         button(type='submit') Submit
+        br
+        if title==='Update'
+            label(for='password') Enter password:
+            input(type='text' id='password' name='password')
     
+    if error
+        p.warning Wrong password
+
     p.create
         a(href='/') Go back to home page
 
@@ -19,3 +26,4 @@ block content
             ul
                 for error in errors
                     li!=error.msg
+        
