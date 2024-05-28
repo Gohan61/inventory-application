@@ -61,3 +61,22 @@ button[type="submit"] {
   border-radius: 10px;
   font-weight: 1.2em;
 }
+
+.productList,
+.productDetail,
+.question,
+.explanation {
+  font-size: 1.3em;
+}
+
+.explanation {
+  color: crimson;
+}
+
+.description {
+  font-style: italic;
+}
+
+.productList li {
+  margin-bottom: 40px;
+}
