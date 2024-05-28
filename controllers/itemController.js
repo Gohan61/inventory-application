@@ -39,3 +39,16 @@ exports.item_delete_get = asyncHandler(async (req, res, next) => {
     category_name: item.category.toString(),
   });
 });
+
+exports.item_delete_post = asyncHandler(async (req, res, next) => {
+  const item = await Item.findById(req.params.id).exec();
+
+  if (item === null) {
+    const err = new Error("Item not found");
+    err.status = 404;
+    return next(err);
+  }
+
+  await Item.findByIdAndDelete(req.body.itemid);
+  res.redirect("/category/" + item.category.toString());
+});
