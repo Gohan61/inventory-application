@@ -25,3 +25,17 @@ exports.item_get = asyncHandler(async (req, res, next) => {
     category: category,
   });
 });
+
+exports.item_delete_get = asyncHandler(async (req, res, next) => {
+  const item = await Item.findById(req.params.id).exec();
+
+  if (item === null) {
+    res.redirect("/category/" + item.category.toString());
+  }
+
+  res.render("item_delete", {
+    title: "Delete",
+    item: item,
+    category_name: item.category.toString(),
+  });
+});
