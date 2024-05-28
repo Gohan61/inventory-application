@@ -5,7 +5,7 @@ block content
     h1= title
 
     form(method='POST')
-        div.form-category
+        div.form-create
             label(for='name') Category name:
             input#name(type='text' placeholder='Full size, TKL, etc.' name='name' required value=(undefined===category ? '' : category.name)) 
             label(for='description') Category description:
