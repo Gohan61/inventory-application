@@ -6,8 +6,8 @@ block content
 
     if items.length
 
-         p #[strong Delete the following items before attempting to delete this category.]
-         div
+         p.explanation #[strong Delete the following items before attempting to delete this category.]
+         div.productList
             h2 Items in category
             dl
                 each item in items
@@ -15,13 +15,13 @@ block content
                         a(href='/category'+item.url) #{item.name}
     
     else
-        p Do you really want to delete this category?
+        p.question Do you really want to delete this category?
 
         form(method="POST")
             div.form-delete
                 input(type='hidden' name='categoryid' value=category._id)
             
             button(type='submit') Delete
-
-    p
+    hr
+    p.create
         a(href=category.url) Go back to #{category.name}

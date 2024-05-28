@@ -4,7 +4,7 @@ block content
 
     h1 #{title}: #{item.name}
 
-    p Do you really want to delete this item?
+    p.question Do you really want to delete this item?
 
     form(method='POST')
         div.form-delete
@@ -12,6 +12,6 @@ block content
 
         button(type='submit') Delete
 
-    p
+    p.create
         a(href='/category' + item.url) Go back
 

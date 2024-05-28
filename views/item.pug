@@ -4,15 +4,16 @@ block content
 
     h1= title
     if item
-        p #{item.description}
-        p #[strong Price: ] € #{item.price}
-        p #[strong Items in stock: ] #{item.numberInStock}
+        div.productDetail
+            p.description #{item.description}
+            p #[strong Price: ] € #{item.price}
+            p #[strong Items in stock: ] #{item.numberInStock}
     else
             p There is no item
     hr
-    p
+    p.create
         a(href='/category/'+categoryID) Back to #{category.name}
-    p
+    p.create
         a(href='/category' + item.url + '/delete') Delete item
-    p
+    p.create
         a(href='/category'+item.url+'/update') Update item
