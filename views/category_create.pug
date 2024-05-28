@@ -11,6 +11,9 @@ block content
             label(for='description') Category description:
             input#description(type='text' placeholder='Features of this type of keyboard' name='description' required value=(undefined===category ? '' : category.description)) 
         button(type='submit') Submit
+    
+    p.create
+        a(href='/') Go back to home page
 
         if errors
             ul
