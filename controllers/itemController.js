@@ -41,18 +41,32 @@ exports.item_delete_get = asyncHandler(async (req, res, next) => {
   });
 });
 
-exports.item_delete_post = asyncHandler(async (req, res, next) => {
-  const item = await Item.findById(req.params.id).exec();
+exports.item_delete_post = [
+  body("password").trim().escape(),
 
-  if (item === null) {
-    const err = new Error("Item not found");
-    err.status = 404;
-    return next(err);
-  }
+  asyncHandler(async (req, res, next) => {
+    const item = await Item.findById(req.params.id).exec();
 
-  await Item.findByIdAndDelete(req.body.itemid);
-  res.redirect("/category/" + item.category.toString());
-});
+    const passwordInput = req.body.password;
+
+    if (item === null) {
+      const err = new Error("Item not found");
+      err.status = 404;
+      return next(err);
+    }
+
+    if (passwordInput !== process.env.PASSWORD) {
+      res.render("item_delete", {
+        title: "Delete",
+        item: item,
+        error: "yes",
+      });
+    } else {
+      await Item.findByIdAndDelete(req.body.itemid);
+      res.redirect("/category/" + item.category.toString());
+    }
+  }),
+];
 
 exports.item_create_get = asyncHandler(async (req, res, next) => {
   const allCategories = await Category.find({}, "name")
@@ -156,9 +170,12 @@ exports.item_update_post = [
     .trim()
     .isInt()
     .escape(),
+  body("password").trim().escape(),
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
+
+    const passwordInput = req.body.password;
 
     const item = new Item({
       name: req.body.name,
@@ -169,11 +186,15 @@ exports.item_update_post = [
       _id: req.params.id,
     });
 
-    if (!errors.isEmpty()) {
+    if (!errors.isEmpty() || passwordInput !== process.env.PASSWORD) {
+      const allCategories = Category.find({}, "name").sort({ name: 1 }).exec();
+
       res.render("item_create", {
         title: "Update",
         item: item,
         errors: errors.array(),
+        categories: allCategories,
+        error: "yes",
       });
       return;
     } else {
