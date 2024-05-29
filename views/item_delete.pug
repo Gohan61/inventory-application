@@ -9,13 +9,12 @@ block content
     form(method='POST')
         div.form-delete
             input(type='hidden' name='itemid' value=item._id)
-
+        label(for='password') Enter password:
+        input(type='text' id='password' name='password')
         button(type='submit') Delete
     br
     
-    div.passwordBox
-        label(for='password') Enter password:
-        input(type='text' id='password' name='password')
+    
 
     if error
         p.warning Wrong password
