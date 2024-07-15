@@ -1,6 +1,6 @@
 # An inventory application
 
-This is a backend only project using Express, NodeJS and MongoDB. Project is meant as a practice of CRUD (Create, Read, Update or Delete) methods.
+This project uses Pug as a templating language for the frontend and Express, NodeJS and MongoDB for the backend. Project is meant as a practice of CRUD (Create, Read, Update or Delete) methods.
 
 ## The Odin Project: Lesson Inventory Application
 
